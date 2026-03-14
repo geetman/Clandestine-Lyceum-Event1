@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clandestine Lyceum | Publish Your First Research Paper</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --ink: #0e0e0e;
+            --paper: #f5f0e8;
+            --cream: #ede8dc;
+            --accent: #c8401a;
+            --muted: #6b6355;
+            --rule: #d6cfc0;
+            --gold: #b8903a;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--paper);
+            color: var(--ink);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.5;
+        }
+
+        h1, h2, h3, h4 { font-family: 'DM Serif Display', serif; }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 1.25rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: all 0.3s;
+            border-bottom: 1px solid transparent;
+        }
+        nav.scrolled {
+            background: rgba(245,240,232,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom-color: var(--rule);
+        }
+        .nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .nav-logo {
+            width: 36px; height: 36px; border: 2px solid var(--ink);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink);
+        }
+        .nav-name { font-family: 'DM Serif Display', serif; font-size: 1rem; color: var(--ink); }
+        .nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
+        .nav-links a { font-size: 0.85rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--ink); }
+        .nav-cta { background: var(--ink) !important; color: var(--paper) !important; padding: 0.5rem 1.25rem; font-size: 0.8rem !important; letter-spacing: 0.05em; text-transform: uppercase; }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+            padding: 6rem 2rem 4rem; max-width: 1100px; margin: 0 auto;
+        }
+        .hero-eyebrow {
+            font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.15em;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem;
+            display: flex; align-items: center; gap: 1rem;
+        }
+        .hero-eyebrow::after { content: ''; display: block; width: 60px; height: 1px; background: var(--accent); }
+        .hero h1 { font-size: clamp(2.8rem,7vw,6rem); line-height: 1.0; color: var(--ink); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+        .hero h1 em { color: var(--accent); font-style: italic; }
+        .hero-sub { font-size: clamp(1rem,2vw,1.2rem); color: var(--muted); max-width: 560px; line-height: 1.7; margin: 1.5rem 0 2.5rem; font-weight: 300; }
+        .event-badge {
+            display: inline-flex; align-items: center; gap: 1.5rem;
+            background: var(--ink); color: var(--paper); padding: 1rem 2rem; margin-bottom: 3rem;
+            font-family: 'DM Mono', monospace;
+        }
+        .event-badge-date { font-size: 1.4rem; font-weight: 500; border-right: 1px solid rgba(245,240,232,0.2); padding-right: 1.5rem; }
+        .event-badge-detail { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; line-height: 1.8; }
+        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .btn-primary {
+            background: var(--accent); color: white; border: none;
+            padding: 0.9rem 2rem; font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+            font-weight: 600; cursor: pointer; text-decoration: none; letter-spacing: 0.03em;
+            transition: all 0.2s; display: inline-block;
+        }
+        .btn-primary:hover { background: #a8341a; transform: translateY(-1px); }
+        .btn-outline {
+            background: transparent; color: var(--ink); border: 1.5px solid var(--ink);
+            padding: 0.9rem 2rem; font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+            font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.2s; display: inline-block;
+        }
+        .btn-outline:hover { background: var(--ink); color: var(--paper); }
+
+        .section-rule { border: none; border-top: 1px solid var(--rule); margin: 0; }
+
+        .section-label {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em;
+            text-transform: uppercase; color: var(--muted); margin-bottom: 3rem;
+            display: flex; align-items: center; gap: 1rem;
+        }
+        .section-label::before { content: ''; display: block; width: 30px; height: 1px; background: var(--muted); }
+
+        /* WHY */
+        .why-section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+        .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); }
+        .why-card { padding: 2.5rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); transition: background 0.3s; }
+        .why-card:nth-child(even) { border-right: none; }
+        .why-card:nth-child(3), .why-card:nth-child(4) { border-bottom: none; }
+        .why-card:hover { background: var(--cream); }
+        .why-card-num { font-family: 'DM Serif Display', serif; font-size: 4rem; color: var(--rule); line-height: 1; margin-bottom: 1rem; display: block; }
+        .why-card h3 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+        .why-card p { font-size: 0.9rem; line-height: 1.7; color: var(--muted); font-weight: 300; }
+
+        /* PULL QUOTE */
+        .pull-quote { padding: 5rem 2rem; background: var(--ink); color: var(--paper); text-align: center; }
+        .pull-quote blockquote { font-family: 'DM Serif Display', serif; font-size: clamp(1.4rem,3.5vw,2.5rem); line-height: 1.4; max-width: 780px; margin: 0 auto; font-style: italic; }
+        .pull-quote cite { display: block; margin-top: 1.5rem; font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-style: normal; }
+
+        /* WHO */
+        .who-section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+        .who-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border: 1px solid var(--rule); margin-top: 3rem; }
+        .who-card { padding: 2rem; border-right: 1px solid var(--rule); text-align: center; }
+        .who-card:last-child { border-right: none; }
+        .who-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+        .who-card h4 { font-size: 1rem; margin-bottom: 0.5rem; }
+        .who-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; font-weight: 300; }
+
+        /* COST */
+        .cost-section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+        .cost-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); margin-top: 2.5rem; }
+        .cost-card { padding: 2.5rem; border-right: 1px solid var(--rule); }
+        .cost-card:last-child { border-right: none; }
+        .cost-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.75rem; margin-bottom: 1rem; font-weight: 500; }
+        .cost-tag.free { background: #e6f4ea; color: #2d7a4f; }
+        .cost-tag.paid { background: #fde8e0; color: var(--accent); }
+        .cost-card h3 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+        .cost-card p { font-size: 0.88rem; line-height: 1.7; color: var(--muted); font-weight: 300; }
+        .cost-card ul { margin-top: 0.75rem; padding-left: 0; list-style: none; }
+        .cost-card ul li { font-size: 0.85rem; color: var(--muted); font-weight: 300; padding: 0.35rem 0; border-bottom: 1px solid var(--rule); display: flex; align-items: center; gap: 0.6rem; }
+        .cost-card ul li:last-child { border-bottom: none; }
+        .cost-card ul li::before { content: '—'; color: var(--rule); font-size: 0.75rem; flex-shrink: 0; }
+
+        /* JOURNAL */
+        .journal-section { padding: 6rem 2rem; background: var(--ink); color: var(--paper); }
+        .journal-inner { max-width: 1100px; margin: 0 auto; }
+        .journal-section .section-label { color: rgba(245,240,232,0.4); }
+        .journal-section .section-label::before { background: rgba(245,240,232,0.3); }
+        .journal-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-bottom: 3rem; }
+        .journal-header h2 { font-size: clamp(1.8rem,4vw,2.8rem); letter-spacing: -0.02em; line-height: 1.15; }
+        .journal-header h2 em { color: var(--gold); font-style: italic; }
+        .journal-header p { color: rgba(245,240,232,0.6); font-size: 0.92rem; font-weight: 300; line-height: 1.8; margin-bottom: 1.25rem; }
+        .journal-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--gold); text-decoration: none; font-family: 'DM Mono', monospace; font-size: 0.8rem; letter-spacing: 0.08em; border-bottom: 1px solid rgba(184,144,58,0.4); padding-bottom: 2px; transition: border-color 0.2s; }
+        .journal-link:hover { border-color: var(--gold); }
+        .journal-badges { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(245,240,232,0.08); border: 1px solid rgba(245,240,232,0.08); margin-top: 3rem; }
+        .journal-badge { background: #161616; padding: 1.75rem 2rem; }
+        .journal-badge-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,240,232,0.35); margin-bottom: 0.5rem; }
+        .journal-badge-value { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--paper); line-height: 1.2; }
+        .journal-badge-value.highlight { color: var(--gold); font-size: 2rem; }
+        .journal-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 3rem; }
+        .journal-tag { border: 1px solid rgba(245,240,232,0.15); color: rgba(245,240,232,0.65); padding: 0.4rem 0.9rem; font-size: 0.78rem; font-weight: 300; letter-spacing: 0.03em; }
+
+        /* REGISTER */
+        .register-section { padding: 6rem 2rem; text-align: center; background: var(--cream); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+        .register-section .section-label { justify-content: center; }
+        .register-section .section-label::before { display: none; }
+        .register-section h2 { font-size: clamp(1.8rem,4vw,3rem); letter-spacing: -0.02em; margin-bottom: 1rem; }
+        .register-section > p { color: var(--muted); font-size: 0.95rem; font-weight: 300; max-width: 460px; margin: 0 auto 2.5rem; line-height: 1.7; }
+        .btn-register {
+            display: inline-block; background: var(--accent); color: white; text-decoration: none;
+            font-family: 'DM Sans', sans-serif; font-size: 1.2rem; font-weight: 600;
+            letter-spacing: 0.04em; padding: 1.2rem 4rem; transition: all 0.25s; border: none; cursor: pointer;
+        }
+        .btn-register:hover { background: #a8341a; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,64,26,0.25); }
+        .reg-note { margin-top: 1.25rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+
+        /* AGENDA */
+        .learn-section { padding: 6rem 2rem; background: var(--cream); }
+        .learn-inner { max-width: 1100px; margin: 0 auto; }
+        .learn-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 4rem; }
+        .learn-header h2 { font-size: clamp(1.8rem,4vw,3rem); letter-spacing: -0.02em; }
+        .learn-header p { color: var(--muted); font-size: 0.95rem; font-weight: 300; line-height: 1.7; }
+        .agenda { display: grid; grid-template-columns: 1fr; gap: 0; }
+        .agenda-item { display: grid; grid-template-columns: 60px 1fr; gap: 2rem; padding: 1.75rem 0; border-bottom: 1px solid var(--rule); align-items: start; }
+        .agenda-item:last-child { border-bottom: none; }
+        .agenda-num { font-family: 'DM Serif Display', serif; font-size: 2.5rem; color: var(--rule); line-height: 1; }
+        .agenda-content h4 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+        .agenda-content p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+        /* FOOTER */
+        .footer-cta { background: var(--ink); padding: 5rem 2rem; text-align: center; color: var(--paper); }
+        .footer-cta h2 { font-size: clamp(1.8rem,4vw,3rem); letter-spacing: -0.02em; margin-bottom: 1rem; }
+        .footer-cta p { color: rgba(245,240,232,0.6); font-size: 0.95rem; max-width: 500px; margin: 0 auto 2.5rem; font-weight: 300; line-height: 1.7; }
+        .wa-btn { display: inline-flex; align-items: center; gap: 0.75rem; background: #25d366; color: white; padding: 0.9rem 2rem; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+        .wa-btn:hover { background: #1fbe5a; transform: translateY(-1px); }
+        .footer-note { margin-top: 3rem; padding-top: 3rem; border-top: 1px solid rgba(245,240,232,0.1); font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; color: rgba(245,240,232,0.3); text-transform: uppercase; }
+
+        /* Animations */
+        .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .fade-up.d1 { transition-delay: 0.1s; }
+        .fade-up.d2 { transition-delay: 0.2s; }
+        .fade-up.d3 { transition-delay: 0.3s; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--paper); }
+        ::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+
+        @media (max-width: 768px) {
+            .why-grid, .cost-grid, .journal-badges { grid-template-columns: 1fr; }
+            .why-card { border-right: none; }
+            .why-card:nth-child(3) { border-bottom: 1px solid var(--rule); }
+            .why-card:nth-child(4) { border-bottom: none; }
+            .cost-card { border-right: none; border-bottom: 1px solid var(--rule); }
+            .cost-card:last-child { border-bottom: none; }
+            .learn-header, .journal-header { grid-template-columns: 1fr; gap: 1rem; }
+            .who-grid { grid-template-columns: 1fr; }
+            .who-card { border-right: none; border-bottom: 1px solid var(--rule); }
+            .who-card:last-child { border-bottom: none; }
+            .nav-links { display: none; }
+            .btn-register { padding: 1.1rem 2.5rem; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="navbar">
+    <a class="nav-brand" href="#">
+        <div class="nav-logo" style="width:44px; height:44px; border:2px solid var(--ink); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0; padding:2px;">
+            <div style="font-family:'DM Mono',monospace; font-size:0.45rem; line-height:1; color:var(--muted); letter-spacing:0.05em;">17</div>
+            <div style="font-family:'DM Serif Display',serif; font-size:1rem; line-height:1; color:var(--ink); font-weight:700;">Cl</div>
+            <div style="font-family:'DM Mono',monospace; font-size:0.38rem; line-height:1.2; color:var(--muted); letter-spacing:0.02em;">35.45</div>
+        </div>
+        <span class="nav-name">Clandestine Lyceum™</span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="#why">Why Research</a></li>
+        <li><a href="#journal">The Journal</a></li>
+        <li><a href="#agenda">Agenda</a></li>
+        <li><a href="#register" class="nav-cta">Register</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+    <div class="hero-eyebrow">Nanometer Horizon Initiative</div>
+    <h1>Publish Your<br><em>First Research</em><br>Paper.</h1>
+    <p class="hero-sub">A guided session by Clandestine Lyceum™ to help Class 8–12 students go from zero to a published academic paper—step by step.</p>
+    <div class="event-badge">
+        <div class="event-badge-date">19 March</div>
+        <div class="event-badge-detail">Wednesday, 4:00 PM onwards<br>Nanometer Horizon™ × Clandestine Lyceum™</div>
+    </div>
+    <div class="hero-btns">
+        <a href="#register" class="btn-primary">Register Now →</a>
+        <a href="#agenda" class="btn-outline" id="agenda-scroll-btn">See What's Inside</a>
+    </div>
+</header>
+
+<hr class="section-rule">
+
+<!-- WHY RESEARCH -->
+<section id="why" class="why-section">
+    <div class="section-label">Why It Matters</div>
+    <h2 class="fade-up" style="font-size:clamp(1.8rem,4vw,3rem); letter-spacing:-0.02em; margin-bottom:3rem;">Research at your age<br>is a superpower.</h2>
+    <div class="why-grid">
+        <div class="why-card fade-up">
+            <span class="why-card-num">01</span>
+            <h3>Stands Out on Applications</h3>
+            <p>A published research paper in Class 8–12 is extraordinary. It sets you apart from thousands of applicants to top colleges—globally and in India and abroad, in a way no grade or award can.</p>
+        </div>
+        <div class="why-card fade-up d1">
+            <span class="why-card-num">02</span>
+            <h3>Builds Real Thinking Skills</h3>
+            <p>Research teaches you how to ask hard questions, dig into evidence, and form original conclusions. These critical thinking skills compound forever—in every subject, every career.</p>
+        </div>
+        <div class="why-card fade-up d2">
+            <span class="why-card-num">03</span>
+            <h3>Opens Academic Doors</h3>
+            <p>ORCID IDs, ResearchGate profiles, and academic citations create a traceable scholarly identity. Starting early means you build a long, impressive track record before you're 18.</p>
+        </div>
+        <div class="why-card fade-up d3">
+            <span class="why-card-num">04</span>
+            <h3>Proves You Can Do the Hard Thing</h3>
+            <p>Anyone can say they're curious. A research paper proves it. It's tangible proof of intellectual initiative that speaks louder than any exam score ever could.</p>
+        </div>
+    </div>
+</section>
+
+<div class="pull-quote">
+    <blockquote>"Research is not for PhDs. It is for anyone willing to ask a question that no one has answered yet."</blockquote>
+    <cite>— Clandestine Lyceum™ × Nanometer Horizon™</cite>
+</div>
+
+<!-- WHO -->
+<section class="who-section">
+    <div class="section-label">Who Should Attend</div>
+    <h2 class="fade-up" style="font-size:clamp(1.8rem,4vw,2.5rem); letter-spacing:-0.02em;">This event is built for<br>Class 8 to Class 12 students.</h2>
+    <div class="who-grid fade-up">
+        <div class="who-card">
+            <span class="who-icon">I</span>
+            <h4>The Curious</h4>
+            <p>You wonder about things beyond your textbook and want a real framework to explore them properly.</p>
+        </div>
+        <div class="who-card">
+            <span class="who-icon">II</span>
+            <h4>The Ambitious</h4>
+            <p>You're targeting top universities and know that a published paper is the kind of edge that actually matters.</p>
+        </div>
+        <div class="who-card">
+            <span class="who-icon">III</span>
+            <h4>The Collaborator</h4>
+            <p>You work better with a team and want to co-author a paper with classmates under expert guidance.</p>
+        </div>
+    </div>
+</section>
+
+<hr class="section-rule">
+
+<!-- COST / FREE -->
+<section class="cost-section">
+    <div class="section-label">Pricing &amp; Costs</div>
+    <h2 class="fade-up" style="font-size:clamp(1.8rem,4vw,2.8rem); letter-spacing:-0.02em; margin-bottom:0.5rem;">
+        This programme is free.<br>
+        <span style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:0.55em; color:var(--muted);">One cost exists—and it's worth knowing about.</span>
+    </h2>
+    <div class="cost-grid fade-up">
+        <div class="cost-card">
+            <div class="cost-tag free">✓ Completely Free</div>
+            <h3>The Entire Programme</h3>
+            <p>Everything that Clandestine Lyceum provides costs you nothing. No fees, no subscriptions, no hidden charges of any kind.</p>
+            <ul>
+                <li>Attending the 19th March meeting</li>
+                <li>All guidance &amp; mentorship</li>
+                <li>Your personalised research plan</li>
+                <li>Academic account setup support</li>
+                <li>Citation &amp; writing help</li>
+                <li>Ongoing support through your paper</li>
+            </ul>
+        </div>
+        <div class="cost-card">
+            <div class="cost-tag paid">Paid by You</div>
+            <h3>Journal Publishing Fee (IJFMR)</h3>
+            <p>When your paper is complete and ready to publish, IJFMR charges a standard article processing fee. This is a normal part of open-access academic publishing worldwide—and it is paid directly to the journal, not to us.</p>
+            <p style="margin-top:0.75rem;">We will walk you through the exact cost at the meeting so there are no surprises. You only pay this <strong>after</strong> your paper is written and ready to submit.</p>
+            <p style="margin-top:1rem; font-family:'DM Mono',monospace; font-size:0.75rem; letter-spacing:0.05em; color:var(--accent);">Exact fee details can be found in (https://www.ijfmr.com/fees-and-payment.php).</p>
+        </div>
+    </div>
+
+    <!-- Timeline notice -->
+    <div class="fade-up" style="margin-top:2rem; border: 1px solid var(--rule); padding:1.75rem 2rem; display:flex; align-items:center; gap:2rem; background:white;">
+        <div style="font-family:'DM Serif Display',serif; font-size:3rem; color:var(--rule); line-height:1; flex-shrink:0;">1–3</div>
+        <div>
+            <div style="font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-bottom:0.3rem;">Expected Timeline</div>
+            <div style="font-size:1rem; font-weight:600; color:var(--ink); margin-bottom:0.3rem;">Months to complete your research paper.</div>
+            <div style="font-size:0.85rem; color:var(--muted); font-weight:300; line-height:1.6;">The exact duration depends on your chosen topic and paper type. A literature review can be completed in as little as 1 month; original research typically takes closer to 2–3 months. Either way, you won't be doing it alone.</div>
+        </div>
+    </div>
+</section>
+
+<!-- JOURNAL -->
+<section id="journal" class="journal-section">
+    <div class="journal-inner">
+        <div class="section-label fade-up">Where Your Paper Gets Published</div>
+        <div class="journal-header fade-up">
+            <h2>Your paper will be published in <em>IJFMR</em> — a globally recognised academic journal.</h2>
+            <div>
+                <p>The International Journal For Multidisciplinary Research (IJFMR) is an open-access, peer-reviewed journal accepted worldwide. It welcomes high-quality research across all disciplines, making it a perfect home for your first paper — regardless of your topic.</p>
+                <a href="https://www.ijfmr.com" target="_blank" class="journal-link">Visit ijfmr.com →</a>
+            </div>
+        </div>
+        <div class="journal-badges fade-up">
+            <div class="journal-badge">
+                <div class="journal-badge-label">Impact Factor</div>
+                <div class="journal-badge-value highlight">9.24</div>
+            </div>
+            <div class="journal-badge">
+                <div class="journal-badge-label">E-ISSN</div>
+                <div class="journal-badge-value">2582-2160</div>
+            </div>
+            <div class="journal-badge">
+                <div class="journal-badge-label">Guidelines Followed</div>
+                <div class="journal-badge-value">UGC-CARE</div>
+            </div>
+            <div class="journal-badge">
+                <div class="journal-badge-label">Review Process</div>
+                <div class="journal-badge-value">Peer Reviewed</div>
+            </div>
+        </div>
+        <div class="journal-tags fade-up">
+            <div class="journal-tag">Open Access</div>
+            <div class="journal-tag">Widely Indexed</div>
+            <div class="journal-tag">Multidisciplinary</div>
+            <div class="journal-tag">International</div>
+            <div class="journal-tag">Scholarly &amp; Academic</div>
+            <div class="journal-tag">Online Refereed</div>
+            <div class="journal-tag">UGC-CARE Guidelines</div>
+        </div>
+    </div>
+</section>
+
+
+<!-- MENTOR -->
+<section style="padding:4rem 2rem; background:var(--paper); border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);">
+    <div style="max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:3rem;">
+        <div style="flex-shrink:0; width:56px; height:56px; background:var(--ink); display:flex; align-items:center; justify-content:center; font-family:'DM Serif Display',serif; font-size:1.4rem; color:var(--paper);">K</div>
+        <div style="flex:1;">
+            <div style="font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-bottom:0.4rem;">Your Guide for This Session</div>
+            <div style="font-size:1.1rem; font-family:'DM Serif Display',serif; color:var(--ink); margin-bottom:0.4rem;">Krishaang Kaushik</div>
+            <div style="font-size:0.85rem; color:var(--muted); font-weight:300; line-height:1.6; max-width:640px;">Recently passed out of Class 12 at Kothari International School. Published 2 research papers with 200+ reads and 4 academic recommendations — including one from Dr. Mohamed Ibrahim Hassan Farag, Postdoctoral Researcher at Cairo University. I have built this programme to share exactly what worked. I also made this website.</div>
+        </div>
+    </div>
+</section>
+
+<!-- REGISTER -->
+<section id="register" class="register-section">
+    <div class="section-label">Registration</div>
+    <h2 class="fade-up">Secure your spot.</h2>
+    <p class="fade-up">Fill in the registration form to join the session on 19th March. Takes less than 2 minutes, and it's completely free. Registrations end on the 18th March</p>
+    <a href="https://forms.gle/Wmj4iRgHJxgbG5Ws5" target="_blank" class="btn-register fade-up">Register Now →</a>
+    <div class="reg-note fade-up">19 March · 4:00 PM · Free to Attend · Class 8–12</div>
+</section>
+
+<!-- AGENDA -->
+<section id="agenda" class="learn-section">
+    <div class="learn-inner">
+        <div class="learn-header fade-up">
+            <h2>What happens at the meeting.</h2>
+            <p>Six structured modules. You walk in a student. You walk out with a research plan, academic accounts, and everything you need to get started.</p>
+        </div>
+        <div class="agenda">
+            <div class="agenda-item fade-up">
+                <div class="agenda-num">01</div>
+                <div class="agenda-content">
+                    <h4>Why Research Papers Matter</h4>
+                    <p>A frank conversation on what academic research actually means, why publishing at your age matters, and how a single paper can change the trajectory of your academic career.</p>
+                </div>
+            </div>
+            <div class="agenda-item fade-up d1">
+                <div class="agenda-num">02</div>
+                <div class="agenda-content">
+                    <h4>Setting Up Your Academic Identity</h4>
+                    <p>Hands-on setup of ORCID, ResearchGate, Google Scholar, and other essential academic accounts. You'll leave with a live academic profile that grows with every paper you publish.</p>
+                </div>
+            </div>
+            <div class="agenda-item fade-up d2">
+                <div class="agenda-num">03</div>
+                <div class="agenda-content">
+                    <h4>How to Actually Do Research</h4>
+                    <p>Where to find credible sources — Google Scholar, PubMed, Semantic Scholar, JSTOR. How to read a paper. How to know if a source is trustworthy. How to build a research database.</p>
+                </div>
+            </div>
+            <div class="agenda-item fade-up d3">
+                <div class="agenda-num">04</div>
+                <div class="agenda-content">
+                    <h4>Mastering Citations</h4>
+                    <p>APA, MLA, IEEE — what they are and when to use them. How to use Zotero or citation tools to manage references automatically. Why citations make or break academic credibility.</p>
+                </div>
+            </div>
+            <div class="agenda-item fade-up">
+                <div class="agenda-num">05</div>
+                <div class="agenda-content">
+                    <h4>Your Personalized Research Plan</h4>
+                    <p>Every participant receives a specific, actionable research plan tailored to their chosen topic and difficulty level. Not a template — a plan written for your paper.</p>
+                </div>
+            </div>
+            <div class="agenda-item fade-up d1">
+                <div class="agenda-num">06</div>
+                <div class="agenda-content">
+                    <h4>Getting Started — Right Now</h4>
+                    <p>The exact first steps to take after the meeting. How to structure your paper. How to write an abstract. How to submit to IJFMR. The full path from idea to published author.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact" class="footer-cta">
+    <h2>Ready to write your first paper?</h2>
+    <p>Register above or reach out to us directly on WhatsApp. Meeting is on 19th March, 4:00 PM.</p>
+    <a href="https://wa.me/919395740774" target="_blank" class="wa-btn">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp: +91 (939)-574-0774
+    </a>
+    <div class="footer-note">Clandestine Lyceum™ 2026 · Nanometer Horizon™ · Nanometer Initiatives™ · All rights reserved</div>
+</footer>
+
+<script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 40); });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Smooth scroll for #agenda and #why links
+    ['#agenda', '#why', '#journal', '#register', '#contact'].forEach(function(hash) {
+        document.querySelectorAll('a[href="' + hash + '"]').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                var target = document.querySelector(hash);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
